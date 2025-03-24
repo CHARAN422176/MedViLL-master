@@ -503,8 +503,8 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # TODO: for Retrieval
-    parser.add_argument("--t2i", type=bool, default=True, help="Text-to-Image Retrieval")
-    parser.add_argument("--i2t", type=bool, default=False, help="Image-to-Text Retrieval")
+    parser.add_argument("--t2i", type=bool, default=False, help="Text-to-Image Retrieval")
+    parser.add_argument("--i2t", type=bool, default=True, help="Image-to-Text Retrieval")
     # TODO: !!!!!!!!!!! MIMIC(val, test) or OPENI(val, test)
     parser.add_argument("--eval_len_size", type=int, default=354, choices=[759, 1536, 710, 354],
                         help="example size per idx_matching_example")  # 759
@@ -536,7 +536,7 @@ if __name__ == '__main__':
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
-                        default='../../data/mimic/T2I_Label_Test.jsonl',
+                        default='../../data/mimic/I2T_Label_Test.jsonl',
                         help='label conditioned test dataset for evaluating the model',
                         choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Test.jsonl',
