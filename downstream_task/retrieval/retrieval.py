@@ -563,11 +563,11 @@ if __name__ == '__main__':
     # When args.CXRBERT: TRUE
     # Load pre-trained model -> weight_load(T), load_pretrained_model: change path, bert_model: set to same size model
     # From scratch -> weight_load(F), bert_model: set to bert-base-scratch(in cxrbert_origin.py, CXRBertEncoder)
-    parser.add_argument("--weight_load", type=bool, default=False, help='load_pretrained_model(T), scratch(F)')
+    parser.add_argument("--weight_load", type=bool, default=True, help='load_pretrained_model(T), scratch(F)')
 
     # do_train -> load_pretrained_model: Pre-trained CXR-BERT
     # do_test -> load_pretrained_model: saved CXRBertForRetrieval model path
-    parser.add_argument("--load_pretrained_model", type=str, default=None)  
+    parser.add_argument("--load_pretrained_model", type=str, default='/kaggle/input/medvill/other/default/1/par/pytorch_model.bin')  
 
     # TODO: Model size, both CXRBERT and CNN_BERT
     parser.add_argument("--bert_model", type=str, default="bert-base-scratch")
