@@ -138,7 +138,7 @@ class CXR_Retrieval_Dataset(Dataset):
         static_path = "/".join(static_path)
 
         if fixed_path == '/home/mimic-cxr/dataset/image_preprocessing/re_512_3ch':
-            fixed_path = '/kaggle/input/mimic-cxr/re_512_3ch/'
+            fixed_path = '/kaggle/input/open-i/home/data_storage/mimic-cxr/dataset/open_i/image_preprocessing/512_3ch'
             img_path = fixed_path + static_path
             
         
