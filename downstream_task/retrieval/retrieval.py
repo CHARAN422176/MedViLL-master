@@ -140,7 +140,7 @@ class CXR_Retrieval_Dataset(Dataset):
         static_path = "/".join(static_path)
 
         if fixed_path == '/home/mimic-cxr/dataset/image_preprocessing/re_512_3ch':
-            fixed_path = '/kaggle/input/mimic-cxr/re_512_3ch'
+            fixed_path = '/kaggle/input/open-i/home/data_storage/mimic-cxr/dataset/open_i/image_preprocessing/512_3ch'
             img_path = fixed_path + static_path
             
         
@@ -532,18 +532,18 @@ if __name__ == '__main__':
     parser.add_argument("--eval_during_training", type=bool, default=True, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
-    parser.add_argument("--MIMIC_dset", type=bool, default=True,
+    parser.add_argument("--MIMIC_dset", type=bool, default=False,
                         help="using mimic-cxr dataset(T), using openi dataset (F)")
 
     # TODO: trainset, mimic or openi
     parser.add_argument("--train_dataset", type=str,
-                        default='../../data/mimic/Train.jsonl',
+                        default='../../data/openi/Train.jsonl',
                         choices=['../../data/mimic/Train.jsonl',
                                  '../../data/openi/Train.jsonl'],
                         help="train dataset for training")
 
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
-                        default='/kaggle/input/json-data/I2T_Label_Valid.jsonl',
+                        default='/kaggle/input/json-data/I2T_Label_Test_openi.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
                         choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
@@ -551,7 +551,7 @@ if __name__ == '__main__':
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
-                        default='/kaggle/input/json-data/T2I_Label_Test.jsonl',
+                        default='/kaggle/input/json-data/T2I_Label_Test_openi.jsonl',
                         help='label conditioned test dataset for evaluating the model',
                         choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Test.jsonl',
