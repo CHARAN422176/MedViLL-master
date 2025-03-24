@@ -517,7 +517,7 @@ if __name__ == '__main__':
     parser.add_argument("--eval_during_training", type=bool, default=False, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
-    parser.add_argument("--MIMIC_dset", type=bool, default=True,
+    parser.add_argument("--MIMIC_dset", type=bool, default=False,
                         help="using mimic-cxr dataset(T), using openi dataset (F)")
 
     # TODO: trainset, mimic or openi
