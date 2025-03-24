@@ -522,13 +522,13 @@ if __name__ == '__main__':
 
     # TODO: trainset, mimic or openi
     parser.add_argument("--train_dataset", type=str,
-                        default='../../data/mimic/Train.jsonl',
+                        default='../../data/openi/Train.jsonl',
                         choices=['../../data/mimic/Train.jsonl',
                                  '../../data/openi/Train.jsonl'],
                         help="train dataset for training")
 
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
-                        default='../../data/mimic/Train.jsonl',
+                        default='../../data/openi/Valid.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
                         choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
@@ -536,7 +536,7 @@ if __name__ == '__main__':
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
-                        default='../../data/mimic/I2T_Label_Test.jsonl',
+                        default='/kaggle/input/json-data/T2I_Label_Test_openi.jsonl',
                         help='label conditioned test dataset for evaluating the model',
                         choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Test.jsonl',
