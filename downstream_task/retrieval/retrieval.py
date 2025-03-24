@@ -553,7 +553,7 @@ if __name__ == '__main__':
     parser.add_argument("--with_cuda", type=bool, default=True, help="training with CUDA: True or False")
     parser.add_argument("--cuda_devices", type=int, nargs='+', default=None, help="CUDA device ids")
     parser.add_argument("--epochs", type=int, default=10, help='number of epochs')
-    parser.add_argument("--batch_size", type=int, default=32, help="number of batch size")
+    parser.add_argument("--batch_size", type=int, default=25, help="number of batch size")
     parser.add_argument("--num_workers", type=int, default=16, help="dataloader worker size")
 
     # TODO: load pre-trained model or not
