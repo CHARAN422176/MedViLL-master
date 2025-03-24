@@ -327,10 +327,10 @@ def train(args, train_dataset, val_dataset, model, tokenizer, dset):
             os.chmod(save_path_per_ep, 0o777)
 
         if args.n_gpu > 1:
-            model.module.save_pretrained(save_path_per_ep)
+            model.module.save_pretrained(save_path_per_ep, safe_serialization=False)
             print(f'Multi_EP: {epoch} Model saved on {save_path_per_ep}')
         else:
-            model.save_pretrained(save_path_per_ep)
+            model.save_pretrained(save_path_per_ep, safe_serialization=False)
             print(f'Single_EP: {epoch} Model saved on {save_path_per_ep}')
 
         # Evaluate during training
