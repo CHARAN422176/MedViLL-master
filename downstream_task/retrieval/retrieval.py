@@ -567,7 +567,7 @@ if __name__ == '__main__':
 
     # do_train -> load_pretrained_model: Pre-trained CXR-BERT
     # do_test -> load_pretrained_model: saved CXRBertForRetrieval model path
-    parser.add_argument("--load_pretrained_model", type=str, default='/kaggle/input/medvill/other/default/1/par/pytorch_model.bin')  
+    parser.add_argument("--load_pretrained_model", type=str, default='/kaggle/input/medvill/other/default/1/par/config.json')  
 
     # TODO: Model size, both CXRBERT and CNN_BERT
     parser.add_argument("--bert_model", type=str, default="bert-base-scratch")
