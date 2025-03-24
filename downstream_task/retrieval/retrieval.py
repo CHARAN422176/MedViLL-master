@@ -278,6 +278,7 @@ def train(args, train_dataset, val_dataset, model, tokenizer, dset):
     criterion = nn.CrossEntropyLoss()
     global_step, global_loss, global_acc = 0, 0.0, 0.0
     best_score = 0
+    best_epoch = -1
 
     for epoch in range(int(args.epochs)):
         train_losses = []
@@ -299,14 +300,12 @@ def train(args, train_dataset, val_dataset, model, tokenizer, dset):
             labels = torch.cat((batch[6], batch[13]), dim=0).to(args.device)
             logits = model(cls_tok, input_txt, attn_mask, segment, input_img, sep_tok)
 
-
             loss = criterion(logits.view(-1, 2), labels.view(-1))
-
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-            logits = torch.max(logits, 1)[1].data  # argmax
+            logits = torch.max(logits, 1)[1].data
             scores = logits == labels
             batch_score = scores.sum()
             batch_acc = batch_score.item() / (args.batch_size * 2)
@@ -321,20 +320,8 @@ def train(args, train_dataset, val_dataset, model, tokenizer, dset):
                   f'loss : {round(loss.item(), 3)}({round(np.mean(train_losses), 3)}), '
                   f'score : {round(batch_acc, 3)}({round(np.mean(train_acc), 3)})')
 
-        save_path_per_ep = os.path.join(args.output_path, str(epoch))
-        if not os.path.exists(save_path_per_ep):
-            os.mkdir(save_path_per_ep)
-            os.chmod(save_path_per_ep, 0o777)
-
-        if args.n_gpu > 1:
-            model.module.save_pretrained(save_path_per_ep, safe_serialization=False)
-            print(f'Multi_EP: {epoch} Model saved on {save_path_per_ep}')
-        else:
-            model.save_pretrained(save_path_per_ep, safe_serialization=False)
-            print(f'Single_EP: {epoch} Model saved on {save_path_per_ep}')
-
         # Evaluate during training
-        if args.eval_during_training:  # and epoch > 4:
+        if args.eval_during_training:
             test_result, test_label, test_losses, idx_lst = test(args, model, val_dataset)
             eval_result, Aligned_lst, mrr_score, recall_precision_results = evaluate(args, test_result, test_label, idx_lst)
 
@@ -361,9 +348,7 @@ def train(args, train_dataset, val_dataset, model, tokenizer, dset):
                 precision = recall_precision_results['t2i_precision']
                 recall = recall_precision_results['t2i_recall']
 
-            if rank_accs['R@1'] > best_score:
-                best_score = rank_accs['R@1']
-
+            current_score = rank_accs['R@1']
             H1, H5, H10 = rank_accs['R@1'], rank_accs['R@5'], rank_accs['R@10']
             R1, R5, R10 = recall['R@1'], recall['R@5'], recall['R@10']
             P1, P5, P10 = precision['R@1'], precision['R@5'], precision['R@10']
@@ -372,6 +357,34 @@ def train(args, train_dataset, val_dataset, model, tokenizer, dset):
                   f'Hit@1:{H1}, Hit@5:{H5}, Hit@10:{H10}, best_Hit1:{best_score},'
                   f'Recall@1:{R1}, Recall@5:{R5}, Recall@10:{R10},'
                   f'Precision@1:{P1}, Precision@1:{P5}, Precision@1:{P10}')
+
+            # Save only if current model is better than previous best
+            if current_score > best_score:
+                # Remove previous best model if it exists
+                if best_epoch != -1:
+                    old_path = os.path.join(args.output_path, f"best_model_epoch{best_epoch}")
+                    if os.path.exists(old_path):
+                        import shutil
+                        shutil.rmtree(old_path)
+                        print(f"Removed previous best model from {old_path}")
+
+                # Update best score and epoch
+                best_score = current_score
+                best_epoch = epoch
+
+                # Save new best model
+                save_path = os.path.join(args.output_path, f"best_model_epoch{epoch}")
+                if not os.path.exists(save_path):
+                    os.makedirs(save_path)
+                    os.chmod(save_path, 0o777)
+
+                if args.n_gpu > 1:
+                    model.module.save_pretrained(save_path, safe_serialization=False)
+                else:
+                    model.save_pretrained(save_path, safe_serialization=False)
+                
+                print(f"New best model saved at {save_path} with R@1: {best_score}")
+
             
 
 def test(args, model, eval_dataset):
