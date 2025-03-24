@@ -170,6 +170,7 @@ def model_eval(data, model, args, criterion, device, store_preds=False):
 def model_forward(model, args, criterion, batch, device):
     txt, segment, mask, img, tgt = batch
     model.to(device)
+    mask = mask.to(dtype=txt.dtype)
     if args.num_image_embeds > 0:
         for param in model.module.enc.img_encoder.parameters():
             param.requires_grad = args.freeze_img_all
