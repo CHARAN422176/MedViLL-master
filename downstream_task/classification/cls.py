@@ -23,7 +23,7 @@ def get_args(parser):
 
     now = datetime.now()
     now = now.strftime('%Y-%m-%d')
-    output_path = "output/" + str(now)
+    output_path = "/kaggle/working/output/cls" + str(now)
     if not os.path.exists(output_path):
         os.mkdir(output_path)
         os.chmod(output_path, 0o777)
@@ -37,11 +37,11 @@ def get_args(parser):
 
 
     parser.add_argument("--openi", type=bool, default=False)
-    parser.add_argument("--data_path", type=str, default='/home/data_storage/mimic-cxr/dataset/new_dset',
+    parser.add_argument("--data_path", type=str, default='/kaggle/input/mimic-cxr/re_512_3ch',
                         help="dset path for training")
-    parser.add_argument("--Train_dset_name", type=str, default='Train_253.jsonl',
+    parser.add_argument("--Train_dset_name", type=str, default='Train.jsonl',
                         help="train dset for mimic")
-    parser.add_argument("--Valid_dset_name", type=str, default='Test_253.jsonl',
+    parser.add_argument("--Valid_dset_name", type=str, default='Test.jsonl',
                         help="valid dset for mimic")
 
     parser.add_argument("--embed_sz", type=int, default=768, choices=[768])
