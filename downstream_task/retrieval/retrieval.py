@@ -113,10 +113,12 @@ class CXR_Retrieval_Dataset(Dataset):
             if args.MIMIC_dset:
                 study_id, split, label, is_aligned, r_id, txt, img = self.data[idx].keys()
             else:
-                study_id, label, is_aligned, r_id, txt, img = self.data[idx].keys()
+                # study_id, label, is_aligned, r_id, txt, img = self.data[idx].keys()
+                study_id, label, txt, img = self.data[idx].keys()
             txt = self.data[idx][txt]
             img = self.data[idx][img]
-            label = self.data[idx][is_aligned]  # 1(Aligned), 0(Not aligned)
+            # label = self.data[idx][is_aligned]  # 1(Aligned), 0(Not aligned)
+            label=1
 
             sample = self.data_processing(txt, img)
             example = tuple(list(sample) + label + [idx])
