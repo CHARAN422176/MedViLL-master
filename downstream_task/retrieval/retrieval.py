@@ -530,25 +530,25 @@ if __name__ == '__main__':
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
                         default='../../data/mimic/Train.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
-                        choices=['../../data/mimic/T2I_Label_Valid.jsonl',
-                                 '../../data/I2T_Label_Valid.jsonl',
-                                 '../../data/openi/T2I_Label_Valid.jsonl',
-                                 '../../data/openi/I2T_Label_Valid.jsonl'])
+                        choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
+                                 '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
+                                 '/kaggle/input/json-data/T2I_Label_Valid.jsonl',
+                                 '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
                         default='../../data/mimic/T2I_Label_Test.jsonl',
                         help='label conditioned test dataset for evaluating the model',
-                        choices=['../../data/mimic/T2I_Label_Test.jsonl',
-                                 '../../data/mimic/I2T_Label_Test.jsonl',
-                                 '../../data/openi/T2I_Label_Test.jsonl',
-                                 '../../data/openi/I2T_Label_Test.jsonl'])
+                        choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
+                                 '/kaggle/input/json-data/I2T_Label_Test.jsonl',
+                                 '/kaggle/input/json-data/T2I_Label_Test_openi.jsonl',
+                                 '/kaggle/input/json-data/I2T_Label_Test_openi.jsonl'])
 
     # output_path = 'output/' + str(datetime.now())
     output_path = os.path.join('/kaggle/working/output/retrival', datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     if not os.path.exists(output_path):
         os.mkdir(output_path)
         os.chmod(output_path, 0o777)
-        
+
     parser.add_argument("--output_path", type=str, default=output_path, help="ex)path/to/save/model")
     parser.add_argument("--with_cuda", type=bool, default=True, help="training with CUDA: True or False")
     parser.add_argument("--cuda_devices", type=int, nargs='+', default=None, help="CUDA device ids")
