@@ -439,7 +439,7 @@ def main(args):
         print('Load Valid dataset', args.label_conditioned_valid_dataset)
         val_dataset = CXR_Retrieval_Dataset(args.label_conditioned_valid_dataset, tokenizer, transforms, args, is_train=False)
 
-        train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
+        train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True,pin_memory=True)
         eval_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, num_workers=args.num_workers)
 
         train(args, train_dataloader, eval_dataloader, model, tokenizer, val_dataset)
@@ -554,7 +554,7 @@ if __name__ == '__main__':
     parser.add_argument("--cuda_devices", type=int, nargs='+', default=None, help="CUDA device ids")
     parser.add_argument("--epochs", type=int, default=10, help='number of epochs')
     parser.add_argument("--batch_size", type=int, default=16, help="number of batch size")
-    parser.add_argument("--num_workers", type=int, default=8, help="dataloader worker size")
+    parser.add_argument("--num_workers", type=int, default=4, help="dataloader worker size")
 
     # TODO: load pre-trained model or not
     parser.add_argument("--hidden_size", type=int, default=768, choices=[768, 512, 128])
