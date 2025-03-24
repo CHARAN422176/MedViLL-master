@@ -543,7 +543,8 @@ if __name__ == '__main__':
                                  '../../data/openi/T2I_Label_Test.jsonl',
                                  '../../data/openi/I2T_Label_Test.jsonl'])
 
-    output_path = 'output/' + str(datetime.now())
+    # output_path = 'output/' + str(datetime.now())
+    output_path = os.path.join('/kaggle/working/output/retrival', datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
     if not os.path.exists(output_path):
         os.mkdir(output_path)
         os.chmod(output_path, 0o777)
