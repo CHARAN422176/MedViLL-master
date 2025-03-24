@@ -32,7 +32,7 @@ def get_args(parser):
     # save_name
     parser.add_argument("--save_name", type=str, default='mimic_par', help='file name to save combination of daset and loaddir name')
 
-    parser.add_argument("--loaddir", type=str, default='path/to/pre-trained_model')
+    parser.add_argument("--loaddir", type=str, default='/kaggle/input/medvill/other/default/1/par')
     parser.add_argument("--name", type=str, default="scenario_name")
 
 
