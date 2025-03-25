@@ -518,8 +518,8 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # TODO: for Retrieval
-    parser.add_argument("--t2i", type=bool, default=True, help="Text-to-Image Retrieval")
-    parser.add_argument("--i2t", type=bool, default=False, help="Image-to-Text Retrieval")
+    parser.add_argument("--t2i", type=bool, default=False, help="Text-to-Image Retrieval")
+    parser.add_argument("--i2t", type=bool, default=True, help="Image-to-Text Retrieval")
     # TODO: !!!!!!!!!!! MIMIC(val, test) or OPENI(val, test)
     parser.add_argument("--eval_len_size", type=int, default=354, choices=[759, 1536, 710, 354],
                         help="example size per idx_matching_example")  # 759
