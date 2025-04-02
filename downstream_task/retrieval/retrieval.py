@@ -523,7 +523,7 @@ if __name__ == '__main__':
     # TODO: !!!!!!!!!!! MIMIC(val, test) or OPENI(val, test)
     parser.add_argument("--eval_len_size", type=int, default=354, choices=[759, 1536, 710, 354],
                         help="example size per idx_matching_example")  # 759
-    parser.add_argument("--do_train", type=bool, default=False, help="Train & Evaluate")
+    parser.add_argument("--do_train", type=bool, default=True, help="Train & Evaluate")
     parser.add_argument("--do_test", type=bool, default=True, help="Test")
 
     # eval_during_training
@@ -532,18 +532,18 @@ if __name__ == '__main__':
     parser.add_argument("--eval_during_training", type=bool, default=True, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
-    parser.add_argument("--MIMIC_dset", type=bool, default=False,
+    parser.add_argument("--MIMIC_dset", type=bool, default=True,
                         help="using mimic-cxr dataset(T), using openi dataset (F)")
 
     # TODO: trainset, mimic or openi
     parser.add_argument("--train_dataset", type=str,
-                        default='../../data/openi/Train.jsonl',
+                        default='../../data/mimic/Train.jsonl',
                         choices=['../../data/mimic/Train.jsonl',
                                  '../../data/openi/Train.jsonl'],
                         help="train dataset for training")
 
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
-                        default='/kaggle/input/json-data/I2T_Label_Test_openi.jsonl',
+                        default='/kaggle/input/json-data/I2T_Label_Valid.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
                         choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
@@ -551,7 +551,7 @@ if __name__ == '__main__':
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
-                        default='/kaggle/input/json-data/T2I_Label_Test_openi.jsonl',
+                        default='/kaggle/input/json-data/T2I_Label_Test.jsonl',
                         help='label conditioned test dataset for evaluating the model',
                         choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Test.jsonl',
@@ -578,7 +578,7 @@ if __name__ == '__main__':
     # When args.CXRBERT: TRUE
     # Load pre-trained model -> weight_load(T), load_pretrained_model: change path, bert_model: set to same size model
     # From scratch -> weight_load(F), bert_model: set to bert-base-scratch(in cxrbert_origin.py, CXRBertEncoder)
-    parser.add_argument("--weight_load", type=bool, default=True, help='load_pretrained_model(T), scratch(F)')
+    parser.add_argument("--weight_load", type=bool, default=False, help='load_pretrained_model(T), scratch(F)')
 
     # do_train -> load_pretrained_model: Pre-trained CXR-BERT
     # do_test -> load_pretrained_model: saved CXRBertForRetrieval model path
