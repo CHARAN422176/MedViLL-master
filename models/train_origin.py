@@ -184,9 +184,11 @@ class MedViLL_Trainer():
             os.chmod(save_path_per_ep, 0o777)
 
         if torch.cuda.device_count() > 1:
-            self.model.module.save_pretrained(save_path_per_ep)
+            # self.model.module.save_pretrained(save_path_per_ep)
+            self.model.module.save_pretrained(save_path_per_ep, safe_serialization=False)
             print(f'Multi_EP: {epoch} Model saved on {save_path_per_ep}')
         else:
-            self.model.save_pretrained(save_path_per_ep)
+            # self.model.save_pretrained(save_path_per_ep)
+            self.model.save_pretrained(save_path_per_ep, safe_serialization=False)
             print(f'Single_EP: {epoch} Model saved on {save_path_per_ep}')
         os.chmod(save_path_per_ep + '/pytorch_model.bin', 0o777)
