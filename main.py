@@ -21,7 +21,7 @@ def train(config, args):
 
     tokenizer = AutoTokenizer.from_pretrained(config['tokenizer'])
     print("Load Train dataset", config['train_dataset'])
-    dset  = create_dataset(tokenizer=tokenizer, args=args, config=config)
+    dset = create_dataset(tokenizer=tokenizer, args=args, config=config)
 
     print("Create DataLoader")
     if args.distributed:
@@ -29,7 +29,13 @@ def train(config, args):
     else:
         samplers = [None, None, None]
         
-    train_data_loader, _, test_data_loader = create_loader(dset, samplers, batch_size=[config['batch_size'],config['batch_size'],config['batch_size']], is_trains=[True, False, False], num_workers=0)
+    train_data_loader, _, test_data_loader = create_loader(
+        dset, 
+        samplers, 
+        batch_size=[config['batch_size'], config['batch_size'], config['batch_size']], 
+        is_trains=[True, False, False], 
+        num_workers=0
+    )
 
     print("Creating BERT Trainer")
     trainer = MedViLL_Trainer(args, config, train_dataloader=train_data_loader, test_dataloader=test_data_loader)
@@ -37,11 +43,9 @@ def train(config, args):
     print("Training Start!")
     for epoch in range(config['epochs']):
         trainer.train(epoch)
-        trainer.save(epoch, args.output_dir)
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--mlm_task", type=str, default=True)
     parser.add_argument("--itm_task", type=str, default=True)
@@ -56,7 +60,7 @@ if __name__ == '__main__':
 
     ## pre_trained_model_path, weight_load
     parser.add_argument("--weight_load", type=bool, default=False, help='pre-trained_model_mid_epoch_load')
-    parser.add_argument("--pre_trained_model_path", type=str)
+    parser.add_argument("--pre_trained_model_path", type=str , default='/kaggle/input/bi/pytorch/default/1/bi')
     
     parser.add_argument("--seed", type=int, default=123)
     args = parser.parse_args()
@@ -68,5 +72,3 @@ if __name__ == '__main__':
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
 
     train(config, args)
-
-
