@@ -24,9 +24,13 @@ def get_args(parser):
     now = datetime.now()
     now = now.strftime('%Y-%m-%d')
     output_path = "/kaggle/working/output/cls" + str(now)
-    if not os.path.exists(output_path):
-        os.mkdir(output_path)
-        os.chmod(output_path, 0o777)
+    # if not os.path.exists(output_path):
+    #     os.mkdir(output_path)
+    #     os.chmod(output_path, 0o777)
+
+    os.makedirs(output_path, exist_ok=True)
+    os.chmod(output_path, 0o777)
+
 
     parser.add_argument("--savedir", type=str, default=output_path)
     # save_name
