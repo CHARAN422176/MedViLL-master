@@ -523,7 +523,7 @@ if __name__ == '__main__':
     # TODO: !!!!!!!!!!! MIMIC(val, test) or OPENI(val, test)
     parser.add_argument("--eval_len_size", type=int, default=354, choices=[759, 1536, 710, 354],
                         help="example size per idx_matching_example")  # 759
-    parser.add_argument("--do_train", type=bool, default=True, help="Train & Evaluate")
+    parser.add_argument("--do_train", type=bool, default=False, help="Train & Evaluate")
     parser.add_argument("--do_test", type=bool, default=True, help="Test")
 
     # eval_during_training
@@ -537,13 +537,13 @@ if __name__ == '__main__':
 
     # TODO: trainset, mimic or openi
     parser.add_argument("--train_dataset", type=str,
-                        default='../../data/mimic/Train.jsonl',
+                        default='../../data/openi/Train.jsonl',
                         choices=['../../data/mimic/Train.jsonl',
                                  '../../data/openi/Train.jsonl'],
                         help="train dataset for training")
 
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
-                        default='/kaggle/input/json-data/I2T_Label_Valid.jsonl',
+                        default='/kaggle/input/json-data/I2T_Label_Valid_openi.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
                         choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
@@ -551,7 +551,7 @@ if __name__ == '__main__':
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
-                        default='/kaggle/input/json-data/T2I_Label_Test.jsonl',
+                        default='/kaggle/input/json-data/T2I_Label_Test_openi.jsonl',
                         help='label conditioned test dataset for evaluating the model',
                         choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Test.jsonl',
