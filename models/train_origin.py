@@ -20,7 +20,10 @@ class MedViLL_Trainer():
         self.configs = configs
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print('Current cuda device ', torch.cuda.current_device())  # check
-
+        
+        # Track best validation loss
+        self.best_val_loss = float('inf')
+        
         if args.weight_load:
             model_config = AutoConfig.from_pretrained(args.pre_trained_model_path)
             model_state_dict = torch.load(os.path.join(args.pre_trained_model_path, 'pytorch_model.bin'))
@@ -32,15 +35,6 @@ class MedViLL_Trainer():
             model_config = BertConfig.from_pretrained("bert-base-uncased")
             self.model = MedViLL(model_config, args, configs).to(self.device)
 
-        # if torch.cuda.device_count() > 1:
-        #     print("Using %d GPUS for BERT" % torch.cuda.device_count())
-        #     self.model = nn.DataParallel(self.model, device_ids=args.cuda_devices)
-
-        # self.model_without_ddp = self.model
-        # if torch.cuda.device_count() > 1:
-        #     model = torch.nn.parallel.DistributedDataParallel(self.model, device_ids=[args.gpu])
-        #     self.model_without_ddp = model.module
-        
         if torch.cuda.device_count() > 1:
             print(f"Using {torch.cuda.device_count()} GPUs with DataParallel")
             self.model = nn.DataParallel(self.model)  # Works on Kaggle
@@ -174,21 +168,26 @@ class MedViLL_Trainer():
                         total_mlm_valid_correct += f_eq.sum()
                         total_mlm_valid_element += len(f_label)
 
-            print("avg loss in testset", np.mean(eval_losses))
+            avg_val_loss = np.mean(eval_losses)
+            print("avg loss in testset", avg_val_loss)
             print("avg itm acc in testset", round(total_valid_correct / total_valid_element * 100, 3))
+            
+            # Save only if current validation loss is better than previous best
+            if avg_val_loss < self.best_val_loss:
+                self.best_val_loss = avg_val_loss
+                self.save(epoch, self.args.output_dir, is_best=True)
 
-    def save(self, epoch, file_path):
-        save_path_per_ep = os.path.join(file_path, str(epoch))
-        if not os.path.exists(save_path_per_ep):
-            os.mkdir(save_path_per_ep)
-            os.chmod(save_path_per_ep, 0o777)
+    def save(self, epoch, file_path, is_best=False):
+        if is_best:
+            save_path = os.path.join(file_path, 'best_model')
+            if not os.path.exists(save_path):
+                os.mkdir(save_path)
+                os.chmod(save_path, 0o777)
 
-        if torch.cuda.device_count() > 1:
-            # self.model.module.save_pretrained(save_path_per_ep)
-            self.model.module.save_pretrained(save_path_per_ep, safe_serialization=False)
-            print(f'Multi_EP: {epoch} Model saved on {save_path_per_ep}')
-        else:
-            # self.model.save_pretrained(save_path_per_ep)
-            self.model.save_pretrained(save_path_per_ep, safe_serialization=False)
-            print(f'Single_EP: {epoch} Model saved on {save_path_per_ep}')
-        os.chmod(save_path_per_ep + '/pytorch_model.bin', 0o777)
+            if torch.cuda.device_count() > 1:
+                self.model.module.save_pretrained(save_path, safe_serialization=False)
+                print(f'Multi_EP: {epoch} Best Model saved on {save_path}')
+            else:
+                self.model.save_pretrained(save_path, safe_serialization=False)
+                print(f'Single_EP: {epoch} Best Model saved on {save_path}')
+            os.chmod(save_path + '/pytorch_model.bin', 0o777)
