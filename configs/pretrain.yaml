@@ -1,9 +1,9 @@
 # train_dataset: 'data/mimic/Train.jsonl'
 # test_dataset: 'data/mimic/Valid.jsonl'
 
-train_dataset: '/data/public/rw/aicad/processed-512-8bit/public/mimic-cxr-jpg/v1/dataset_frontal_train.csv'
-valid_dataset: '/data/public/rw/aicad/processed-512-8bit/public/mimic-cxr-jpg/v1/dataset_frontal_valid.csv'
-test_dataset: '/data/public/rw/aicad/processed-512-8bit/public/mimic-cxr-jpg/v1/dataset_frontal_test.csv'
+train_dataset: '/kaggle/working/MedViLL-master/data/openi/Train.jsonl'
+valid_dataset: '/kaggle/working/MedViLL-master/data/openi/Valid.jsonl'
+test_dataset: '/kaggle/working/MedViLL-master/data/openi/Test.jsonl'
 
 # each train_file (json) contains a python list where each item is {'image': img_path, 'caption': text or list_of_text }               
 bert_config: 'configs/config_bert.json'
