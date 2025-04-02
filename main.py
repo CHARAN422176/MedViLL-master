@@ -59,7 +59,7 @@ if __name__ == '__main__':
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
 
     ## pre_trained_model_path, weight_load
-    parser.add_argument("--weight_load", type=bool, default=False, help='pre-trained_model_mid_epoch_load')
+    parser.add_argument("--weight_load", type=bool, default=True, help='pre-trained_model_mid_epoch_load')
     parser.add_argument("--pre_trained_model_path", type=str , default='/kaggle/input/bi/pytorch/default/1/bi')
     
     parser.add_argument("--seed", type=int, default=123)
