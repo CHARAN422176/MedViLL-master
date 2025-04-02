@@ -275,10 +275,10 @@ if __name__ == '__main__':
     parser.add_argument("--num_class", default=458)
     parser.add_argument("--do_train", type=bool, default=True, help="Train & Evaluate")
 
-    parser.add_argument("--src_file", type=str, default='/home/data_storage/mimic-cxr/dataset/data_RAD')
-    parser.add_argument("--img_path", type=str, default='/home/data_storage/mimic-cxr/dataset/vqa_image/vqa_512_3ch')
+    parser.add_argument("--src_file", type=str, default='/kaggle/input/vqa-rad/home/mimic-cxr/dataset/data_RAD')
+    parser.add_argument("--img_path", type=str, default='/kaggle/input/vqa-rad/home/mimic-cxr/dataset/data_RAD/images')
     parser.add_argument("--train_dataset", type=str,                           
-                        default='/home/data_storage/mimic-cxr/dataset/data_RAD/trainet.json',
+                        default='/kaggle/input/vqa-rad/home/mimic-cxr/dataset/data_RAD/trainset.json',
                         help="train dataset for training")
 
 
@@ -297,7 +297,7 @@ if __name__ == '__main__':
     parser.add_argument("--embedding_size", type=int, default=768, choices=[768, 512, 128])
 
 
-    parser.add_argument("--load_pretrained_model", type=str, default='/home/edlab/jhmoon/mimic_mv_real/mimic-cxr/pre-train/base_PAR_36,128', choices=['','output/all/35','output/chest/45'])
+    parser.add_argument("--load_pretrained_model", type=str, default='/kaggle/input/bi/pytorch/default/1/bi', choices=['','output/all/35','output/chest/45'])
                                  
 
     parser.add_argument("--bert_model", type=str, default="bert-base-scratch",
