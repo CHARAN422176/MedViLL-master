@@ -169,7 +169,8 @@ class CXRDataset(Dataset):
 
     def random_pair_sampling(self, idx):
         
-        _, _, label, txt, img = self.data[idx].keys()  # id, txt, img
+        # _, _, label, txt, img = self.data[idx].keys()  # id, txt, img
+        _, label, txt, img = self.data[idx].keys()  # id, txt, img
 
         d_label = self.data[idx][label]
         d_txt = self.data[idx][txt]
