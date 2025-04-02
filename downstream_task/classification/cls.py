@@ -37,7 +37,7 @@ def get_args(parser):
 
 
     parser.add_argument("--openi", type=bool, default=True)
-    parser.add_argument("--data_path", type=str, default='/kaggle/working/MedViLL-master/data/mimic',
+    parser.add_argument("--data_path", type=str, default='/kaggle/working/MedViLL-master/data/openi',
                         help="dset path for training")
     parser.add_argument("--Train_dset_name", type=str, default='Train.jsonl',
                         help="train dset for mimic")
