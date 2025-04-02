@@ -36,11 +36,18 @@ class MedViLL_Trainer():
         #     print("Using %d GPUS for BERT" % torch.cuda.device_count())
         #     self.model = nn.DataParallel(self.model, device_ids=args.cuda_devices)
 
-        self.model_without_ddp = self.model
-        if torch.cuda.device_count() > 1:
-            model = torch.nn.parallel.DistributedDataParallel(self.model, device_ids=[args.gpu])
-            self.model_without_ddp = model.module
+        # self.model_without_ddp = self.model
+        # if torch.cuda.device_count() > 1:
+        #     model = torch.nn.parallel.DistributedDataParallel(self.model, device_ids=[args.gpu])
+        #     self.model_without_ddp = model.module
         
+        if torch.cuda.device_count() > 1:
+            print(f"Using {torch.cuda.device_count()} GPUs with DataParallel")
+            self.model = nn.DataParallel(self.model)  # Works on Kaggle
+            self.model_without_ddp = self.model.module
+        else:
+            self.model_without_ddp = self.model
+
         self.train_data = train_dataloader
         self.test_data = test_dataloader
         self.optimizer = AdamW(self.model.parameters(), lr=self.configs['lr'])
