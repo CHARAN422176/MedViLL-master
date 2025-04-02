@@ -532,18 +532,18 @@ if __name__ == '__main__':
     parser.add_argument("--eval_during_training", type=bool, default=False, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
-    parser.add_argument("--MIMIC_dset", type=bool, default=True,
+    parser.add_argument("--MIMIC_dset", type=bool, default=False,
                         help="using mimic-cxr dataset(T), using openi dataset (F)")
 
     # TODO: trainset, mimic or openi
     parser.add_argument("--train_dataset", type=str,
-                        default='../../data/openi/Train.jsonl',
+                        default='/kaggle/working/MedViLL-master/data/openi/Train.jsonl',
                         choices=['../../data/mimic/Train.jsonl',
                                  '../../data/openi/Train.jsonl'],
                         help="train dataset for training")
 
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
-                        default='/kaggle/input/json-data/I2T_Label_Valid_openi.jsonl',
+                        default='/kaggle/working/MedViLL-master/data/openi/Valid.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
                         choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
