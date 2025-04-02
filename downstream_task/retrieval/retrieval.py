@@ -529,7 +529,7 @@ if __name__ == '__main__':
     # eval_during_training
     # must be deleted! after validation dataset
     # TODO: only MIMIC, PAR, set to True if not set to False
-    parser.add_argument("--eval_during_training", type=bool, default=True, help="eval_druing_training")
+    parser.add_argument("--eval_during_training", type=bool, default=False, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
     parser.add_argument("--MIMIC_dset", type=bool, default=True,
