@@ -523,7 +523,7 @@ if __name__ == '__main__':
     # TODO: !!!!!!!!!!! MIMIC(val, test) or OPENI(val, test)
     parser.add_argument("--eval_len_size", type=int, default=354, choices=[759, 1536, 710, 354],
                         help="example size per idx_matching_example")  # 759
-    parser.add_argument("--do_train", type=bool, default=False, help="Train & Evaluate")
+    parser.add_argument("--do_train", type=bool, default=True, help="Train & Evaluate")
     parser.add_argument("--do_test", type=bool, default=True, help="Test")
 
     # eval_during_training
@@ -532,7 +532,7 @@ if __name__ == '__main__':
     parser.add_argument("--eval_during_training", type=bool, default=True, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
-    parser.add_argument("--MIMIC_dset", type=bool, default=True,
+    parser.add_argument("--MIMIC_dset", type=bool, default=False,
                         help="using mimic-cxr dataset(T), using openi dataset (F)")
 
     # TODO: trainset, mimic or openi
