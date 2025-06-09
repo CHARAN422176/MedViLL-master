@@ -15,11 +15,8 @@ class CXRBertForRetrieval(BertPreTrainedModel):
         if args.weight_load:
             config = AutoConfig.from_pretrained(args.load_pretrained_model)
             model_state_dict = torch.load(os.path.join(args.load_pretrained_model, 'pytorch_model.bin'))
-            # cxrbert = CXRBERT.from_pretrained(args.load_pretrained_model,
-            #                                   state_dict=model_state_dict, config=config, args=args)
-            cxrbert = CXRBERT(config, args=args)
-            cxrbert.load_state_dict(model_state_dict)
-
+            cxrbert = CXRBERT.from_pretrained(args.load_pretrained_model,
+                                              state_dict=model_state_dict, config=config, args=args)
         else:
             config = BertConfig.from_pretrained('bert-base-uncased')
             cxrbert = CXRBERT(config, args)
