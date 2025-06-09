@@ -14,8 +14,7 @@ class CXRBertForRetrieval(BertPreTrainedModel):
 
         if args.weight_load:
             config = AutoConfig.from_pretrained(args.load_pretrained_model)
-            # model_state_dict = torch.load(os.path.join(args.load_pretrained_model, 'pytorch_model.bin'))
-            model_state_dict = torch.load(os.path.join(args.load_pretrained_model, 'pytorch_model.bin'), map_location=torch.device('cpu'))
+            model_state_dict = torch.load(os.path.join(args.load_pretrained_model, 'pytorch_model.bin'))
             cxrbert = CXRBERT.from_pretrained(args.load_pretrained_model,
                                               state_dict=model_state_dict, config=config, args=args)
         else:
