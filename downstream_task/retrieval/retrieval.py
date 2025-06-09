@@ -518,8 +518,8 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # TODO: for Retrieval
-    parser.add_argument("--t2i", type=bool, default=False, help="Text-to-Image Retrieval")
-    parser.add_argument("--i2t", type=bool, default=True, help="Image-to-Text Retrieval")
+    parser.add_argument("--t2i", type=bool, default=True, help="Text-to-Image Retrieval")
+    parser.add_argument("--i2t", type=bool, default=False, help="Image-to-Text Retrieval")
     # TODO: !!!!!!!!!!! MIMIC(val, test) or OPENI(val, test)
     parser.add_argument("--eval_len_size", type=int, default=354, choices=[759, 1536, 710, 354],
                         help="example size per idx_matching_example")  # 759
@@ -529,21 +529,21 @@ if __name__ == '__main__':
     # eval_during_training
     # must be deleted! after validation dataset
     # TODO: only MIMIC, PAR, set to True if not set to False
-    parser.add_argument("--eval_during_training", type=bool, default=False, help="eval_druing_training")
+    parser.add_argument("--eval_during_training", type=bool, default=True, help="eval_druing_training")
     # TODO: label_conditioned or just study_id matching !
     # TODO: Choose dataset, mimic or openI
-    parser.add_argument("--MIMIC_dset", type=bool, default=False,
+    parser.add_argument("--MIMIC_dset", type=bool, default=True,
                         help="using mimic-cxr dataset(T), using openi dataset (F)")
 
     # TODO: trainset, mimic or openi
     parser.add_argument("--train_dataset", type=str,
-                        default='/kaggle/working/MedViLL-master/data/openi/Train.jsonl',
+                        default='/kaggle/working/MedViLL-master/data/mimic/Train.jsonl',
                         choices=['../../data/mimic/Train.jsonl',
                                  '../../data/openi/Train.jsonl'],
                         help="train dataset for training")
 
     parser.add_argument("--label_conditioned_valid_dataset", type=str,
-                        default='/kaggle/working/MedViLL-master/data/openi/Valid.jsonl',
+                        default='/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                         help='label conditioned valid dataset for evaluating train set',
                         choices=['/kaggle/input/json-data/T2I_Label_Valid.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl',
@@ -551,7 +551,7 @@ if __name__ == '__main__':
                                  '/kaggle/input/json-data/I2T_Label_Valid.jsonl'])
 
     parser.add_argument("--label_conditioned_test_dataset", type=str,
-                        default='/kaggle/input/json-data/T2I_Label_Test_openi.jsonl',
+                        default='/kaggle/input/json-data/T2I_Label_Test.jsonl',
                         help='label conditioned test dataset for evaluating the model',
                         choices=['/kaggle/input/json-data/T2I_Label_Test.jsonl',
                                  '/kaggle/input/json-data/I2T_Label_Test.jsonl',
@@ -567,7 +567,7 @@ if __name__ == '__main__':
     parser.add_argument("--output_path", type=str, default=output_path, help="ex)path/to/save/model")
     parser.add_argument("--with_cuda", type=bool, default=True, help="training with CUDA: True or False")
     parser.add_argument("--cuda_devices", type=int, nargs='+', default=None, help="CUDA device ids")
-    parser.add_argument("--epochs", type=int, default=1, help='number of epochs')
+    parser.add_argument("--epochs", type=int, default=10, help='number of epochs')
     parser.add_argument("--batch_size", type=int, default=25, help="number of batch size")
     parser.add_argument("--num_workers", type=int, default=4, help="dataloader worker size")
 
@@ -582,7 +582,7 @@ if __name__ == '__main__':
 
     # do_train -> load_pretrained_model: Pre-trained CXR-BERT
     # do_test -> load_pretrained_model: saved CXRBertForRetrieval model path
-    parser.add_argument("--load_pretrained_model", type=str, default='/kaggle/input/bi/pytorch/default/1/bi')  
+    parser.add_argument("--load_pretrained_model", type=str, default='/kaggle/input/s2s/pytorch/default/1/s2s')  
 
     # TODO: Model size, both CXRBERT and CNN_BERT
     parser.add_argument("--bert_model", type=str, default="bert-base-scratch")
