@@ -22,7 +22,7 @@ from fuzzywuzzy import fuzz
 from datetime import datetime
 from collections import OrderedDict
 from torch.utils.data import Dataset, DataLoader
-from transformers import AdamW
+from transformers.optimization import AdamW
 from transformers import BertTokenizer
 from transformers import BertConfig, AutoConfig
 
