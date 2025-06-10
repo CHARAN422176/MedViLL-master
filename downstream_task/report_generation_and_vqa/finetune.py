@@ -227,15 +227,31 @@ def main():
         level=logging.INFO)
     logger = logging.getLogger(__name__)
 
-    torch.cuda.set_device(args.local_rank)
-    device = torch.device("cuda", args.local_rank)
+    # torch.cuda.set_device(args.local_rank)
+    # device = torch.device("cuda", args.local_rank)
     
-    torch.distributed.init_process_group(backend='nccl', init_method = args.dist_url, world_size=args.world_size, rank=args.global_rank)
+    # torch.distributed.init_process_group(backend='nccl', init_method = args.dist_url, world_size=args.world_size, rank=args.global_rank)
             
-    logger.info("device: {} distributed training: {}, 16-bits training: {}".format(device,  bool(args.local_rank != -1), args.fp16))
-    torch.distributed.barrier()
-    setup_for_distributed(args.local_rank == 0)
-    torch.backends.cudnn.benchmark
+    # logger.info("device: {} distributed training: {}, 16-bits training: {}".format(device,  bool(args.local_rank != -1), args.fp16))
+    # torch.distributed.barrier()
+    # setup_for_distributed(args.local_rank == 0)
+    # torch.backends.cudnn.benchmark
+    if torch.cuda.device_count() > 1 and args.world_size > 1:
+        torch.cuda.set_device(args.local_rank)
+        device = torch.device("cuda", args.local_rank)
+
+        torch.distributed.init_process_group(backend='nccl', init_method=args.dist_url, world_size=args.world_size, rank=args.global_rank)
+
+        logger.info("device: {} distributed training: {}, 16-bits training: {}".format(device,  bool(args.local_rank != -1), args.fp16))
+        torch.distributed.barrier()
+        setup_for_distributed(args.local_rank == 0)
+    else:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        logger.info(f"[Kaggle] Running on single GPU: {device}")
+        args.local_rank = -1  # prevent DDP logic later
+
+    torch.backends.cudnn.benchmark = True
+
 
     if args.gradient_accumulation_steps < 1:
         raise ValueError("Invalid gradient_accumulation_steps parameter: {}, should be >= 1".format(
