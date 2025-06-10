@@ -60,7 +60,7 @@ def setup_for_distributed(is_master):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--generation_dataset", default='mimic-cxr', type=str, help=["mimic-cxr, openi"])
+    parser.add_argument("--generation_dataset", default='openi', type=str, help=["mimic-cxr, openi"])
     parser.add_argument("--vqa_rad", default="all", type=str, choices=["all", "chest", "head", "abd"])
     parser.add_argument("--data_set", default="train", type=str, help="train | valid")
     parser.add_argument('--img_hidden_sz', type=int, default=2048, help="Whether to use amp for fp16")
@@ -91,10 +91,10 @@ def main():
     parser.add_argument('--hidden_size', type=int, default=768)
     # parser.add_argument('--hidden_size', type=int, default=512)
     parser.add_argument('--bar', default=False, type=str,help="True or False")
-    parser.add_argument("--model_recover_path", default=None, type=str,
+    parser.add_argument("--model_recover_path", default="/kaggle/input/bis2s/other/default/1/bi_s2s/pytorch_model.bin", type=str,
                         help="The file of fine-tuned pretraining model. ex)'./pretrained_model/pytorch_model.bin'") # model load
     parser.add_argument("--output_dir",
-                        default='/home/edlab/jhmoon/mimic_mv_real/mimic-cxr/downstream_model/',
+                        default='/kaggle/working/output',
                         type=str,
                         help="The output directory where the model predictions and checkpoints will be written.")
 
