@@ -179,7 +179,8 @@ def main():
                         help="Use different projection layers for tasks.")
 
     args = parser.parse_args()
-    args.local_rank = int(os.environ['LOCAL_RANK'])
+    # args.local_rank = int(os.environ['LOCAL_RANK'])
+    args.local_rank = int(os.environ.get('LOCAL_RANK', 0))  # Fallback to 0 if not set
     args.global_rank = int(os.environ["RANK"])
     args.world_size = int(os.environ['WORLD_SIZE'])
 
