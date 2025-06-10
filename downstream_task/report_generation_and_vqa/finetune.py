@@ -106,7 +106,7 @@ def main():
     parser.add_argument('--img_postion', default = True,
                         help="It will produce img_position.")
     parser.add_argument("--do_train",
-                        action='store_true', default = True,
+                        action='store_true', default = False,
                         help="Whether to run training. This should ALWAYS be set to True.")
     parser.add_argument("--do_lower_case",
                         action='store_true',
@@ -163,7 +163,7 @@ def main():
     parser.add_argument('--max_position_embeddings', type=int, default=None,
                         help="max position embeddings")
 
-    parser.add_argument('--image_root', type=str, default='../../data/mimic/re_512_3ch/Train')
+    parser.add_argument('--image_root', type=str, default='/kaggle/input/open-i/home/data_storage/mimic-cxr/dataset/open_i/image_preprocessing/512_3ch')
     parser.add_argument('--split', type=str, nargs='+', default=['train', 'valid'])
 
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
