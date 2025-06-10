@@ -211,8 +211,8 @@ def main():
             args.src_file = 'data/mimic/Train.jsonl'
             args.file_valid_jpgs = 'data/mimic/Valid.jsonl'
         else:
-            args.src_file = 'data/openi/Train.jsonl'
-            args.file_valid_jpgs = 'data/openi/Valid.jsonl'
+            args.src_file = '/kaggle/working/MedViLL-master/data/openi/Train.jsonl'
+            args.file_valid_jpgs = '/kaggle/working/MedViLL-master/data/openi/Valid.jsonl'
 
     print(" # PID :", os.getpid())
     os.makedirs(args.output_dir, exist_ok=True)
