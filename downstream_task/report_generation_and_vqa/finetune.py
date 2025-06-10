@@ -184,7 +184,8 @@ def main():
     # args.global_rank = int(os.environ["RANK"])
     args.global_rank = int(os.environ.get("RANK", 0))  # Fallback to 0 if not set
     # args.world_size = int(os.environ['WORLD_SIZE'])
-    args.world_size = int(os.environ.get('WORLD_SIZE', 1))
+    # args.world_size = int(os.environ.get('WORLD_SIZE', 1))
+    args.world_size = 1 
 
     if args.model_recover_path !=None:
         args.exp_name = args.model_recover_path.split('/')[-2]
