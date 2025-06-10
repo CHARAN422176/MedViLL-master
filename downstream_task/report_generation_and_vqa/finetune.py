@@ -72,7 +72,7 @@ def main():
     parser.add_argument("--vqa_eval", action='store_true',  help="vqa_eval | True | False")
     
     parser.add_argument("--train_batch_size",default=1,type=int,help="Total batch size for training.")
-    parser.add_argument("--num_train_epochs",default=100,type=int,help="Total number of training epochs to perform.")
+    parser.add_argument("--num_train_epochs",default=50,type=int,help="Total number of training epochs to perform.")
     parser.add_argument('--from_scratch', action='store_true', default = False,
                 help="Initialize parameters with random values (i.e., training from scratch).")
     parser.add_argument("--img_encoding", type=str, default='fully_use_cnn', choices=['random_sample', 'fully_use_cnn'])
