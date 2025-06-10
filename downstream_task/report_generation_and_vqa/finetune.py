@@ -106,7 +106,7 @@ def main():
     parser.add_argument('--img_postion', default = True,
                         help="It will produce img_position.")
     parser.add_argument("--do_train",
-                        action='store_true', default = False,
+                        action='store_true', default = True,
                         help="Whether to run training. This should ALWAYS be set to True.")
     parser.add_argument("--do_lower_case",
                         action='store_true',
@@ -181,7 +181,8 @@ def main():
     args = parser.parse_args()
     # args.local_rank = int(os.environ['LOCAL_RANK'])
     args.local_rank = int(os.environ.get('LOCAL_RANK', 0))  # Fallback to 0 if not set
-    args.global_rank = int(os.environ["RANK"])
+    # args.global_rank = int(os.environ["RANK"])
+    args.global_rank = int(os.environ.get("RANK", 0))  # Fallback to 0 if not set
     args.world_size = int(os.environ['WORLD_SIZE'])
 
     if args.model_recover_path !=None:
