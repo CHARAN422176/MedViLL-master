@@ -166,7 +166,7 @@ def main():
     parser.add_argument('--image_root', type=str, default='/kaggle/input/open-i/home/data_storage/mimic-cxr/dataset/open_i/image_preprocessing/512_3ch')
     parser.add_argument('--split', type=str, nargs='+', default=['train', 'valid'])
 
-    parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
+    parser.add_argument('--dist_url', default='tcp://127.0.0.1:23456', help='url used to set up distributed training')
 
     parser.add_argument('--sche_mode', default='warmup_linear', type=str, help="warmup_linear | warmup_constant | warmup_cosine")
     parser.add_argument('--drop_prob', default=0.1, type=float)
