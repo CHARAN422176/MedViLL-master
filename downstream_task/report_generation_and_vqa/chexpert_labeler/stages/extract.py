@@ -4,7 +4,7 @@ import itertools
 from collections import defaultdict
 from tqdm import tqdm
 # from constants import *
-from chexpert_labeler import constants
+from chexpert_labeler.constants import *
 from pathlib import Path
 
 import bioc
