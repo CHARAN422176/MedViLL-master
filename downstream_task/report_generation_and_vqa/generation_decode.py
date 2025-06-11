@@ -350,9 +350,29 @@ def main():
                 results_dict['precision'].append(round(metric_pos1[1], 3))
                 results_dict['recall'].append(round(metric_pos1[2], 3))
                 results_dict['f1'].append(round(metric_pos1[3], 3))
-            save_file = f"all_random{args.random_bootstrap_testnum}_beam{args.beam_size}_{args.model_recover_path.split('/')[-2]}_{args.model_recover_path.split('.')[-2]}ep_gen.pickle"
+            # save_file = f"all_random{args.random_bootstrap_testnum}_beam{args.beam_size}_{args.model_recover_path.split('/')[-2]}_{args.model_recover_path.split('.')[-2]}ep_gen.pickle"
+            # with open(save_file, 'wb') as f:
+            #     pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+            import os
+
+            # Ensure results directory exists
+            results_dir = '/kaggle/working/results'
+            os.makedirs(results_dir, exist_ok=True)
+
+            # Extract model dir and name from path
+            model_dir = os.path.basename(os.path.dirname(args.model_recover_path))  # e.g., bi_s2s
+            model_name = os.path.splitext(os.path.basename(args.model_recover_path))[0]  # e.g., pytorch_model3054
+
+            # Construct the new save path
+            save_file = os.path.join(
+                results_dir,
+                f"all_random{args.random_bootstrap_testnum}_beam{args.beam_size}_{model_dir}_{model_name}ep_gen.pickle"
+            )
+
+            # Save results
             with open(save_file, 'wb') as f:
                 pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+
             
             print("results_dict", results_dict)
             torch.cuda.empty_cache()
