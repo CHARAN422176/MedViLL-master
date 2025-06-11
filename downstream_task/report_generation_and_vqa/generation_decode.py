@@ -210,16 +210,17 @@ def main():
             torch.cuda.empty_cache()
 
             eval_lst = []
-            if 'openi' in re.split(r'[ _/]', args.model_recover_path):
-                args.src_file = '/kaggle/working/MedViLL-master/data/openi/Test.jsonl'
-                print("OpenI data load")
-            elif 'mimic' in re.split(r'[ _/]', args.model_recover_path):
-                args.src_file = '/home/jhmoon/MedViLL/data/mimic/Test.jsonl'
-                print("MimiC data load")
-            elif 'pytorch_model' in re.split(r'[ _/.]', args.model_recover_path):
-                args.src_file = '/home/jhmoon/MedViLL/data/mimic/Test.jsonl'
-                print("MimiC data load")
-            else: raise Exception("Path Error!!")
+            # if 'openi' in re.split(r'[ _/]', args.model_recover_path):
+            #     args.src_file = '/kaggle/working/MedViLL-master/data/openi/Test.jsonl'
+            #     print("OpenI data load")
+            # elif 'mimic' in re.split(r'[ _/]', args.model_recover_path):
+            #     args.src_file = '/home/jhmoon/MedViLL/data/mimic/Test.jsonl'
+            #     print("MimiC data load")
+            # elif 'pytorch_model' in re.split(r'[ _/.]', args.model_recover_path):
+            #     args.src_file = '/home/jhmoon/MedViLL/data/mimic/Test.jsonl'
+            #     print("MimiC data load")
+            # else: raise Exception("Path Error!!")
+            args.src_file = '/kaggle/working/MedViLL-master/data/openi/Test.jsonl'
             
             img_dat = [json.loads(l) for l in open(args.src_file)]
             img_idx = 0
