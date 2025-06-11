@@ -81,7 +81,7 @@ def main():
 
     parser.add_argument('--wandb', action='store_true', default = False,
                         help="Whether to use wandb logging")
-    parser.add_argument("--model_recover_path", default=None, type=str,
+    parser.add_argument("--model_recover_path", default="/kaggle/input/bis2s/other/default/1/bi_s2s/pytorch_model.bin", type=str,
                         help="The file of fine-tuned pretraining model.") # model load
     # parser.add_argument("--model_recover_path", default='/home/mimic-cxr/downstream_model/report_generation/base_mimic_par_256_128/model.50.bin', type=str,
     #                     help="The file of fine-tuned pretraining model.") # model load
@@ -121,7 +121,7 @@ def main():
     parser.add_argument('--max_txt_length', type=int, default=128,
                         help="maximum length of target sequence")
 
-    parser.add_argument('--dataset', default='cxr', type=str)
+    parser.add_argument('--dataset', default='openi', type=str)
     parser.add_argument('--len_vis_input', type=int, default=256)
     parser.add_argument('--split', type=str, default='valid')
     parser.add_argument('--drop_prob', default=0.1, type=float)
