@@ -220,7 +220,13 @@ def main():
             #     args.src_file = '/home/jhmoon/MedViLL/data/mimic/Test.jsonl'
             #     print("MimiC data load")
             # else: raise Exception("Path Error!!")
-            args.src_file = '/kaggle/working/MedViLL-master/data/openi/Test.jsonl'
+            openi_path = '/kaggle/working/MedViLL-master/data/openi/Test.jsonl'
+            if os.path.isfile(openi_path):
+                args.src_file = openi_path
+                print("✅ OpenI Test.jsonl found and loaded.")
+            else:
+                raise FileNotFoundError(f"❌ File not found: {openi_path}")
+
             
             img_dat = [json.loads(l) for l in open(args.src_file)]
             img_idx = 0
