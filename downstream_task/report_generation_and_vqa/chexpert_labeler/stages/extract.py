@@ -5,6 +5,7 @@ from collections import defaultdict
 from tqdm import tqdm
 # from constants import *
 from chexpert_labeler import constants
+from pathlib import Path
 
 import bioc
 
@@ -23,6 +24,7 @@ class Extractor(object):
     def load_phrases(self, phrases_dir, phrases_type):
         """Read in map from observations to phrases for matching."""
         observation2phrases = defaultdict(list)
+        phrases_dir = Path(phrases_dir)
         for phrases_path in phrases_dir.glob("*.txt"):
             with phrases_path.open() as f:
                 for line in f:
