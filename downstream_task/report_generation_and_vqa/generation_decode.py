@@ -312,7 +312,8 @@ def main():
                                 pass
                 end = time.time()
                 print(end - start)
-                exit()
+                # exit()
+                print("Entered into bleu loop...")
             if args.beam_size == 1:
                 predictions = [{'image_id': tup[1], 'gt_caption': tup[-1], 'gt_label': tup[-2], 'gen_caption': output_lines[img_idx]} for img_idx, tup in enumerate(input_lines)]
                 print("avg ppl: ",np.mean(total_score))
