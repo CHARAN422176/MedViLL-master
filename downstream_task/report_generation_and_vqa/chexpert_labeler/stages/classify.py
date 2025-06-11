@@ -6,7 +6,7 @@ from chexpert_labeler.negbio.neg import semgraph, propagator, neg_detector
 from chexpert_labeler.negbio import ngrex
 from tqdm import tqdm
 
-from constants import *
+from chexpert_labeler.constants import *
 
 
 class ModifiedDetector(neg_detector.Detector):
