@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import logging
 
-from negbio.neg import semgraph
+from chexpert_labeler.negbio.neg import semgraph
 import collections
 
 
