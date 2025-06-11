@@ -102,9 +102,9 @@ def main():
                         help="Set this flag if you are using an uncased model.")
     parser.add_argument('--new_segment_ids', action='store_true', default = False,
                         help="Use new segment ids for bi-uni-directional LM.")
-    parser.add_argument('--batch_size', type=int, default=1,
+    parser.add_argument('--batch_size', type=int, default=16,
                         help="Batch size for decoding.") #160
-    parser.add_argument('--beam_size', type=int, default=1,
+    parser.add_argument('--beam_size', type=int, default=5,
                         help="Beam size for searching")
 
     parser.add_argument('--sampling_case', type=int, default=-1,
@@ -123,7 +123,7 @@ def main():
 
     parser.add_argument('--dataset', default='openi', type=str)
     parser.add_argument('--len_vis_input', type=int, default=256)
-    parser.add_argument('--split', type=str, default='valid')
+    parser.add_argument('--split', type=str, default='Test')
     parser.add_argument('--drop_prob', default=0.1, type=float)
     parser.add_argument('--file_valid_jpgs', default='', type=str)
 
