@@ -335,22 +335,24 @@ def main():
                 # results_dict['f1'].append(round(metric_pos1[3], 3))
             else:
                 predictions = [{'image_id': tup[1], 'gt_caption': tup[-1], 'gt_label': tup[-2], 'gen_caption': output_lines[img_idx]} for img_idx, tup in enumerate(input_lines)]
-                a,b,c,d, metric_pos1 = language_eval_bleu(args.model_recover_path, str(args.beam_size)+str('beam')+str(bootstrap)+'th_test', predictions)
+                # a,b,c,d, metric_pos1 = language_eval_bleu(args.model_recover_path, str(args.beam_size)+str('beam')+str(bootstrap)+'th_test', predictions)
+                a,b,c,d= language_eval_bleu(args.model_recover_path, str(round(np.mean(total_score), 2))+'ppl_'+str(bootstrap)+'th_test', predictions)
+
                 max_a.append(a)
                 max_b.append(b)
                 max_c.append(c)
                 max_d.append(d)
-                print("(micro) accuracy, precision, recall, f1,  for pos1: {}, {}, {}, {}".format(round(metric_pos1[0], 3), round(metric_pos1[1], 3), round(metric_pos1[2], 3), round(metric_pos1[3], 3)))#, round(metric_pos1[4], 3)))
+                # print("(micro) accuracy, precision, recall, f1,  for pos1: {}, {}, {}, {}".format(round(metric_pos1[0], 3), round(metric_pos1[1], 3), round(metric_pos1[2], 3), round(metric_pos1[3], 3)))#, round(metric_pos1[4], 3)))
 
                 results_dict['bleu1'].append(a)
                 results_dict['bleu2'].append(b)
                 results_dict['bleu3'].append(c)
                 results_dict['bleu4'].append(d)
-                results_dict['ppl'].append(np.mean(total_score))
-                results_dict['accuracy'].append(round(metric_pos1[0], 3))
-                results_dict['precision'].append(round(metric_pos1[1], 3))
-                results_dict['recall'].append(round(metric_pos1[2], 3))
-                results_dict['f1'].append(round(metric_pos1[3], 3))
+                # results_dict['ppl'].append(np.mean(total_score))
+                # results_dict['accuracy'].append(round(metric_pos1[0], 3))
+                # results_dict['precision'].append(round(metric_pos1[1], 3))
+                # results_dict['recall'].append(round(metric_pos1[2], 3))
+                # results_dict['f1'].append(round(metric_pos1[3], 3))
             # save_file = f"all_random{args.random_bootstrap_testnum}_beam{args.beam_size}_{args.model_recover_path.split('/')[-2]}_{args.model_recover_path.split('.')[-2]}ep_gen.pickle"
             # with open(save_file, 'wb') as f:
             #     pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
