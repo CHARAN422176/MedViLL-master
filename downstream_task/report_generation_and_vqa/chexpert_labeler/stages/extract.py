@@ -3,7 +3,8 @@ import re
 import itertools
 from collections import defaultdict
 from tqdm import tqdm
-from constants import *
+# from constants import *
+from chexpert_labeler import constants
 
 import bioc
 
