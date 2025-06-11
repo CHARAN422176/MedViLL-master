@@ -4,8 +4,22 @@ from tqdm import tqdm
 import nltk
 
 def language_eval_bleu(model_recover_path, eval_model, preds):
-    reference_path = model_recover_path.split('.')[0] + str(eval_model) + '_gt.csv'
-    hypothesis_path = model_recover_path.split('.')[0] + str(eval_model) + '.csv'
+    # reference_path = model_recover_path.split('.')[0] + str(eval_model) + '_gt.csv'
+    # hypothesis_path = model_recover_path.split('.')[0] + str(eval_model) + '.csv'
+    import os
+
+    # Create /kaggle/working/results directory if it doesn't exist
+    results_dir = '/kaggle/working/results'
+    os.makedirs(results_dir, exist_ok=True)
+
+    # Extract base name (e.g., "pytorch_model3054") without extension
+    filename_base = os.path.splitext(os.path.basename(model_recover_path))[0]
+    filename_base = os.path.join(results_dir, filename_base + str(eval_model))
+
+    # Create paths
+    reference_path = filename_base + '_gt.csv'
+    hypothesis_path = filename_base + '.csv'
+
 
     list_of_list_of_references = []
     list_of_list_of_hypotheses = []
