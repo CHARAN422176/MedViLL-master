@@ -1,12 +1,13 @@
-"""Define mention classifier class."""
-import logging
-from pathlib import Path
-from chexpert_labeler.negbio.pipeline import parse, ptb2ud, negdetect
-from chexpert_labeler.negbio.neg import semgraph, propagator, neg_detector
-from negbio import ngrex
-from tqdm import tqdm
+"""Define mention classifier class.
 
-from constants import *
+Author: stanfordmlgroup
+Modified by: Yifan Peng
+"""
+import logging
+
+from negbio import ngrex
+from negbio.chexpert.constants import *
+from negbio.neg import semgraph, propagator, neg_detector
 
 
 class ModifiedDetector(neg_detector.Detector):
@@ -14,12 +15,11 @@ class ModifiedDetector(neg_detector.Detector):
 
     Overrides parent methods __init__, detect, and match_uncertainty.
     """
+
     def __init__(self, pre_negation_uncertainty_path,
                  negation_path, post_negation_uncertainty_path):
-        self.neg_patterns = ngrex.load(negation_path)
-        self.uncertain_patterns = ngrex.load(post_negation_uncertainty_path)
-        self.preneg_uncertain_patterns\
-            = ngrex.load(pre_negation_uncertainty_path)
+        super(ModifiedDetector, self).__init__(negation_path, post_negation_uncertainty_path)
+        self.preneg_uncertain_patterns = ngrex.load(pre_negation_uncertainty_path)
 
     def detect(self, sentence, locs):
         """Detect rules in report sentences.
@@ -32,14 +32,11 @@ class ModifiedDetector(neg_detector.Detector):
             (str, MatcherObj, (begin, end)): negation or uncertainty,
             matcher, matched annotation
         """
-        logger = logging.getLogger(__name__)
-
         try:
             g = semgraph.load(sentence)
             propagator.propagate(g)
         except Exception:
-            logger.exception('Cannot parse dependency graph ' +
-                             f'[offset={sentence.offset}]')
+            logging.exception('Cannot parse dependency graph [offset=%s]', sentence.offset)
             raise
         else:
             for loc in locs:
@@ -73,34 +70,3 @@ class ModifiedDetector(neg_detector.Detector):
                 if n0 == node:
                     return m
 
-
-class Classifier(object):
-    """Classify mentions of observations from radiology reports."""
-    def __init__(self, pre_negation_uncertainty_path, negation_path,
-                 post_negation_uncertainty_path, verbose=False):
-        self.parser = parse.NegBioParser(model_dir=PARSING_MODEL_DIR)
-        lemmatizer = ptb2ud.Lemmatizer()
-        self.ptb2dep = ptb2ud.NegBioPtb2DepConverter(lemmatizer, universal=True)
-
-        self.verbose = verbose
-
-        self.detector = ModifiedDetector(pre_negation_uncertainty_path,
-                                         negation_path,
-                                         post_negation_uncertainty_path)
-
-    def classify(self, collection):
-        """Classify each mention into one of
-        negative, uncertain, or positive."""
-        documents = collection.documents
-        if self.verbose:
-            print("Classifying mentions...")
-            documents = tqdm(documents)
-        for document in documents:
-            # Parse the impression text in place.
-            self.parser.parse_doc(document)
-            # Add the universal dependency graph in place.
-            self.ptb2dep.convert_doc(document)
-            # Detect the negation and uncertainty rules in place.
-            negdetect.detect(document, self.detector)
-            # To reduce memory consumption, remove sentences text.
-            del document.passages[0].sentences[:]
