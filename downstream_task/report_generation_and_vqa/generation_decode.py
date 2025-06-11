@@ -102,7 +102,7 @@ def main():
                         help="Set this flag if you are using an uncased model.")
     parser.add_argument('--new_segment_ids', action='store_true', default = False,
                         help="Use new segment ids for bi-uni-directional LM.")
-    parser.add_argument('--batch_size', type=int, default=160,
+    parser.add_argument('--batch_size', type=int, default=96,
                         help="Batch size for decoding.") #160
     parser.add_argument('--beam_size', type=int, default=5,
                         help="Beam size for searching")
