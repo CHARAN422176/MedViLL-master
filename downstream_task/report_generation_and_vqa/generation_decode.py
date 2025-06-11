@@ -353,7 +353,7 @@ def main():
             # save_file = f"all_random{args.random_bootstrap_testnum}_beam{args.beam_size}_{args.model_recover_path.split('/')[-2]}_{args.model_recover_path.split('.')[-2]}ep_gen.pickle"
             # with open(save_file, 'wb') as f:
             #     pickle.dump(results_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
-            import os
+            # import os
 
             # Ensure results directory exists
             results_dir = '/kaggle/working/results'
