@@ -1,5 +1,6 @@
 import csv
-from nltk.translate.bleu_score import corpus_bleu
+# from nltk.translate.bleu_score import corpus_bleu
+from nltk.translate.bleu_score import corpus_bleu, SmoothingFunction
 from tqdm import tqdm
 import nltk
 
@@ -45,14 +46,24 @@ def language_eval_bleu(model_recover_path, eval_model, preds):
             list_of_list_of_references.append([ref_tokens])  # list of one list of ref
             list_of_list_of_hypotheses.append(cand_tokens)
 
-    bleu_1gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(1, 0, 0, 0))
-    bleu_2gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(0.5, 0.5, 0, 0))
-    bleu_3gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(0.33, 0.33, 0.33, 0))
-    bleu_4gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(0.25, 0.25, 0.25, 0.25))
+    # bleu_1gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(1, 0, 0, 0))
+    # bleu_2gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(0.5, 0.5, 0, 0))
+    # bleu_3gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(0.33, 0.33, 0.33, 0))
+    # bleu_4gram = corpus_bleu(list_of_list_of_references, list_of_list_of_hypotheses, weights=(0.25, 0.25, 0.25, 0.25))
 
-    print(f'1-Gram BLEU: {bleu_1gram:.2f}')
-    print(f'2-Gram BLEU: {bleu_2gram:.2f}')
-    print(f'3-Gram BLEU: {bleu_3gram:.2f}')
-    print(f'4-Gram BLEU: {bleu_4gram:.2f}')
+    # print(f'1-Gram BLEU: {bleu_1gram:.2f}')
+    # print(f'2-Gram BLEU: {bleu_2gram:.2f}')
+    # print(f'3-Gram BLEU: {bleu_3gram:.2f}')
+    # print(f'4-Gram BLEU: {bleu_4gram:.2f}')
+    smooth = SmoothingFunction().method1
+    bleu1 = corpus_bleu(refs, hyps, weights=(1, 0, 0, 0), smoothing_function=smooth)
+    bleu2 = corpus_bleu(refs, hyps, weights=(0.5, 0.5, 0, 0), smoothing_function=smooth)
+    bleu3 = corpus_bleu(refs, hyps, weights=(0.33, 0.33, 0.33, 0), smoothing_function=smooth)
+    bleu4 = corpus_bleu(refs, hyps, weights=(0.25, 0.25, 0.25, 0.25), smoothing_function=smooth)
+
+    print(f"1-Gram BLEU: {bleu1:.4f}")
+    print(f"2-Gram BLEU: {bleu2:.4f}")
+    print(f"3-Gram BLEU: {bleu3:.4f}")
+    print(f"4-Gram BLEU: {bleu4:.4f}")
 
     return bleu_1gram, bleu_2gram, bleu_3gram, bleu_4gram
